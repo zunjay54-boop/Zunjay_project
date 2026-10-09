@@ -1,6 +1,6 @@
 # Zunjay Arcade — Block Drop
 
-React + TypeScript + Vite 기반 테트리스 스타일 블록 퍼즐입니다.
+React + TypeScript + Vite 기반 테트리스 스타일 블록 퍼즐입니다. 보드는 가로 26칸, 세로 20칸입니다.
 
 Node.js 24 LTS를 권장합니다. 별도 서버나 환경 변수는 필요하지 않습니다.
 

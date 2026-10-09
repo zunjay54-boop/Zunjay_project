@@ -1,6 +1,6 @@
 import React, {useEffect, useReducer, useState} from 'react';
 import {createRoot} from 'react-dom/client';
-import {act, initial, ghost, shapes, type Action} from './game';
+import {act, initial, ghost, shapes, WIDTH, HEIGHT, type Action} from './game';
 import './style.css';
 
 function readBest() { try {const value = Number(localStorage.getItem('zunjay-best'));return Number.isFinite(value) && value > 0 ? Math.floor(value) : 0;} catch {return 0;} }
@@ -43,8 +43,8 @@ function App() {
           <section className="card stats"><div><span className="label">LEVEL</span><strong>{String(level).padStart(2,'0')}<small>LV</small></strong></div><div><span className="label">LINES</span><strong>{String(game.lines).padStart(2,'0')}<small>개</small></strong></div><div className="progress"><span style={{width:`${game.lines%10*10}%`}}/></div><p>다음 레벨까지 {10-game.lines%10}줄</p></section>
           <div className="little-note"><span>✦</span><p>완벽한 자리는 있어요.<br/>다음 블록을 기다려 보세요.</p></div>
         </aside>
-        <section className="board-section" aria-label="테트리스 게임"><div className="board-top"><span><i className={game.status==='playing'?'live':''}/>{({ready:'READY TO PLAY',playing:'IN THE ZONE',paused:'TAKE A BREATH',over:'GAME OVER'})[game.status]}</span><span>10 × 20</span></div>
-          <div className="board-wrap"><div className="board" role="img" aria-label={`게임 보드. 점수 ${game.score}, 지운 줄 ${game.lines}`}>
+        <section className="board-section" aria-label="테트리스 게임"><div className="board-top"><span><i className={game.status==='playing'?'live':''}/>{({ready:'READY TO PLAY',playing:'IN THE ZONE',paused:'TAKE A BREATH',over:'GAME OVER'})[game.status]}</span><span>{WIDTH} × {HEIGHT}</span></div>
+          <div className="board-wrap"><div className="board" style={{gridTemplateColumns: `repeat(${WIDTH}, 1fr)`, aspectRatio: `${WIDTH} / ${HEIGHT}`}} role="img" aria-label={`게임 보드. 점수 ${game.score}, 지운 줄 ${game.lines}`}>
             {board.flatMap((row,y) => row.map((cell,x) => <div key={`${y}-${x}`} className={`cell ${cell<0?'ghost':''} c${Math.abs(cell)}`}/>))}
           </div>{game.status !== 'playing' && <div className="overlay"><div className="overlay-mark">{game.status==='over'?'↻':game.status==='paused'?'Ⅱ':'▦'}</div><h2>{game.status==='over'?'다시, 한 판 더?':game.status==='paused'?'잠시 쉬어가기':'LET’S DROP.'}</h2><p>{game.status==='over'?`${game.score.toLocaleString()}점! 새로운 기록에 도전해 보세요.`:game.status==='paused'?'준비되면 이어서 플레이하세요.':'블록을 맞추고, 한 줄을 완성하세요.'}</p><button className="primary" onClick={()=>dispatch(game.status==='paused'?'pause':'start')}>{game.status==='paused'?'계속하기':game.status==='over'?'다시 도전':'게임 시작'} <span>→</span></button><small>{game.status==='paused'?'P 키로도 계속할 수 있어요':'ENTER TO PLAY'}</small></div>}</div>
           <div className="board-bottom"><span>↓ SOFT DROP</span><span>SPACE HARD DROP</span></div>

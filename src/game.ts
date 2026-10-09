@@ -1,4 +1,4 @@
-export const WIDTH = 10;
+export const WIDTH = 26;
 export const HEIGHT = 20;
 export type Grid = number[][];
 export const shapes = [ [[1,1,1,1]], [[1,1],[1,1]], [[0,1,0],[1,1,1]], [[0,1,1],[1,1,0]], [[1,1,0],[0,1,1]], [[1,0,0],[1,1,1]], [[0,0,1],[1,1,1]] ];
